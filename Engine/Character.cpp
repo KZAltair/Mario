@@ -109,17 +109,17 @@ bool Character::DoBrickCollision(Brick& brick)
 	bool collided = false;
 	if (rect.IsOverlappingWith(brick.GetRect()))
 	{
-		if (rect.bottom > brick.GetRect().top)
+		if (!std::signbit(vel.y))
 		{
 			pos.y = brick.GetRect().top - rect.GetHeight();
 			collided = true;
 		}
-		else if (rect.top < brick.GetRect().bottom)
+		else if (std::signbit(vel.y))
 		{
 			pos.y = brick.GetRect().bottom + rect.GetHeight();
 			collided = true;
 		}
-		else if (rect.right > brick.GetRect().left)
+		else if (!std::signbit(vel.x))
 		{
 			pos.x = brick.GetRect().left - rect.GetWidth();
 			collided = true;
@@ -128,10 +128,6 @@ bool Character::DoBrickCollision(Brick& brick)
 		{
 			pos.x = brick.GetRect().right + rect.GetWidth();
 			collided = true;
-		}
-		else
-		{
-			gravity = 5.0f;
 		}
 	}
 		
